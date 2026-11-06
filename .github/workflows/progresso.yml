@@ -1,0 +1,38 @@
+name: Progresso do workshop
+
+on:
+  push:
+  pull_request:
+    types: [opened, reopened, synchronize, edited, closed]
+  pull_request_review:
+    types: [submitted]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+
+# Execuções em fila: duas simultâneas poderiam comentar sobre o mesmo estado.
+concurrency:
+  group: progresso-workshop
+  cancel-in-progress: false
+
+jobs:
+  progresso:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Em eventos de PR o padrão é o commit de merge sintético; o progresso é medido na branch do aluno.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verificar progresso
+        run: node .github/scripts/progresso.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
