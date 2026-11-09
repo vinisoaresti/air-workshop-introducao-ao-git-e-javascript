@@ -30,3 +30,7 @@ Workshop prático de introdução ao Git, usando pequenos exemplos em JavaScript
 ## Progresso
 
 A cada `push`, Pull Request e review, a Actions **Progresso do workshop** confere os exercícios E2 a E6 e comenta na Issue o que foi validado e o próximo passo. O resumo completo fica em **Actions** > execução > **Summary**. O E1 é local e não é verificado.
+
+## E5
+
+Simulando outra pessoa avançando a `main`.
